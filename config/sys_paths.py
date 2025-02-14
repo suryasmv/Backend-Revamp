@@ -1,0 +1,1 @@
+BASE_DIR = r"D:\Backend\patient_files"  
