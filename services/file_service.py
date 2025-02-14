@@ -19,9 +19,12 @@ def get_batches_with_files():
                     # Find the patient's Excel file
                     for file in os.listdir(patient_path):
                         if file.endswith(".xlsx"):  # Filter only Excel files
-                            patient_files.append(file)
+                            filename_without_extension = os.path.splitext(file)[0]  # Remove .xlsx extension
+                            patient_files.append(filename_without_extension)  
 
-            # Store batch-wise patient file names
-            batches[batch] = patient_files
+            # Store batch-wise patient file names (Normalize batch name)
+            batch_key = batch.upper()  # Convert batch names to uppercase
+            if patient_files:  # Only add non-empty batches
+                batches[batch_key] = patient_files
 
     return batches

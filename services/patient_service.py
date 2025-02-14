@@ -18,7 +18,7 @@ def extract_batch_data(batch_name):
                 file_path = os.path.join(root, file)
                 batch_data[file] = process_excel_file(file_path)
     
-    return {"batch_name": batch_name, "patients": batch_data}
+    return {"conditions": batch_data}
 
 def process_excel_file(file_path):
     """
@@ -74,7 +74,8 @@ def extract_batch_data2(batch_name):
                 file_path = os.path.join(root, file)
                 batch_data[file] = process_excel_file2(file_path)  # Using the new function
     
-    return {"batch_name": batch_name, "patients": batch_data}
+    return batch_data  # Directly returning batch_data
+
 
 def process_excel_file2(file_path):
     """
@@ -94,28 +95,29 @@ def process_excel_file2(file_path):
                 gene_name = row.get("Gene Name", None) if special_condition else row.get("Gene", None)
                 gene_name = gene_name if pd.notna(gene_name) else "NaN"
 
+                # Build the JSON object
                 json_object = {
-                    "Condition": sheet_name if special_condition else (row.get("Condition", "NaN")),
-                    "Headings": sheet_name if special_condition else (row.get("Headings", "NaN")),
+                    "Condition": sheet_name if special_condition else (row.get("Condition", None) if pd.notna(row.get("Condition", None)) else "NaN"),
+                    "Headings": sheet_name if special_condition else (row.get("Headings", None) if pd.notna(row.get("Headings", None)) else "NaN"),
                     "subtype_cond": sheet_name,
-                    "Gene Name": gene_name,
-                    "Gene": row.get("Gene", "NaN"),
-                    "Gene Score": row.get("Gene Score", "NaN"),
-                    "rsID": row.get("rsID", "NaN"),
-                    "Lit": row.get("Literature", "NaN"),
-                    "CH": row.get("CHROM", "NaN"),
-                    "POS": row.get("POS", "NaN"),
-                    "ref": row.get("REF", "NaN"),
-                    "alt": row.get("ALT", "NaN"),
-                    "Zygosity": row.get("Zygosity", "NaN"),
-                    "Consequence": row.get("Consequence", "NaN"),
-                    "Conseq score": row.get("Consequence score", "NaN"),
-                    "IMPACT": row.get("IMPACT", "NaN"),
-                    "IMPACT score": row.get("IMPACT score", "NaN"),
-                    "ClinVar CLNDN": row.get("ClinVar CLNDN", "NaN"),
-                    "Clinical consequence": row.get("Clinical consequence", "NaN"),
-                    "clin sig": row.get("ClinVar CLNSIG", "NaN"),
-                    "Variant type": row.get("Variant type", "NaN")
+                    "Gene Name": row.get("Gene", None) if pd.notna(row.get("Gene", None)) else "NaN",
+                    "Gene": row.get("Gene", None) if pd.notna(row.get("Gene", None)) else "NaN",
+                    "Gene Score": row.get("Gene Score", None) if pd.notna(row.get("Gene Score", None)) else "NaN",
+                    "rsID": row.get("rsID", None) if pd.notna(row.get("rsID", None)) else "NaN",
+                    "Lit": row.get("Literature", None) if pd.notna(row.get("Literature", None)) else "NaN",
+                    "CH": row.get("CHROM", None) if pd.notna(row.get("CHROM", None)) else "NaN",
+                    "POS": row.get("POS", None) if pd.notna(row.get("POS", None)) else "NaN",
+                    "ref": row.get("REF", None) if pd.notna(row.get("REF", None)) else "NaN",
+                    "alt": row.get("ALT", None) if pd.notna(row.get("ALT", None)) else "NaN",
+                    "Zygosity": row.get("Zygosity", None) if pd.notna(row.get("Zygosity", None)) else "NaN",
+                    "Consequence": row.get("Consequence", None) if pd.notna(row.get("Consequence", None)) else "NaN",
+                    "Conseq score": row.get("Consequence score", None) if pd.notna(row.get("Consequence score", None)) else "NaN",
+                    "IMPACT": row.get("IMPACT", None) if pd.notna(row.get("IMPACT", None)) else "NaN",
+                    "IMPACT score": row.get("IMPACT score", None) if pd.notna(row.get("IMPACT score", None)) else "NaN",
+                    "ClinVar CLNDN": row.get("ClinVar CLNDN", None) if pd.notna(row.get("ClinVar CLNDN", None)) else "NaN",
+                    "Clinical consequence": row.get("Clinical consequence", None) if pd.notna(row.get("Clinical consequence", None)) else "NaN",
+                    "clin sig": row.get("ClinVar CLNSIG", None) if pd.notna(row.get("ClinVar CLNSIG", None)) else "NaN",
+                    "Variant type": row.get("Variant type", None) if pd.notna(row.get("Variant type", None)) else "NaN"
                 }
 
                 patient_data["conditions"].append(json_object)
