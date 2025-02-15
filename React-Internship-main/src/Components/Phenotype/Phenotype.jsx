@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Button, Checkbox, Dialog } from "primereact";
 import "./Phenotype.css";
 
-const Phenotype = ({ isPhenotypeVisible, selectedPatient }) => {
+const Phenotype = ({ isPhenotypeVisible, selectedPatient, selectedBatch }) => {
   const [selectedPhenos, setSelectedPhenos] = useState([]);
   const [visibleDialog, setVisibleDialog] = useState(false);
   const [dialogSelection, setDialogSelection] = useState([]);
@@ -26,7 +26,7 @@ const Phenotype = ({ isPhenotypeVisible, selectedPatient }) => {
   const fetchPDF = async (fileType) => {
     if (!selectedPatient) return;
 
-    const url = `http://localhost:5000/patient_files/${selectedPatient}/${fileType}`;
+    const url = `http://127.0.0.1:5000/patient_files/${selectedBatch}/${selectedPatient}/${fileType}`;
 
     try {
       const response = await fetch(url);

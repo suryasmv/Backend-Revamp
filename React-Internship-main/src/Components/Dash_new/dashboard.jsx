@@ -677,6 +677,7 @@ const Dashboard = () => {
                 <Phenotype
                   isPhenotypeVisible={isPhenotypeVisible}
                   selectedPatient={selectedPatient}
+                  selectedBatch={selectedBatch}
                 />
               </div>
             </div>

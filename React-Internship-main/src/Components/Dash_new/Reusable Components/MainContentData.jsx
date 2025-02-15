@@ -28,7 +28,6 @@ const MainContentData = ({
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [patientConditionData, setPatientConditionData] = useState({});
 
-<<<<<<< HEAD
   // useEffect(() => {
   //   if (selectedPatient) {
   //     fetch(`http://127.0.0.1:5000/get_patient_json_data/${selectedPatient}`)
@@ -37,19 +36,6 @@ const MainContentData = ({
   //       .catch((error) => console.error("Error fetching patient data:", error));
   //   }
   // }, [selectedPatient]);
-=======
-  useEffect(() => {
-    if (selectedPatient) {
-      fetch(`http://127.0.0.1:5000/get_patient_json_data/${selectedPatient}`)
-        .then((response) => response.json())
-        .then((data) => setPatientConditionData(data))
-        .catch((error) => console.error("Error fetching patient data:", error));
-
-      // Reset submitted data when patient changes
-      setSubmittedData([]);
-    }
-  }, [selectedPatient]);
->>>>>>> a51c214 (Reset submitted data on patient change)
 
   const toggleFullScreen = () => {
     setIsFullScreen(!isFullScreen); // Toggle fullscreen state
