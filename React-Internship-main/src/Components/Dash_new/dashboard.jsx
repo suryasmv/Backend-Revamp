@@ -367,7 +367,7 @@ const Dashboard = () => {
           return value === "HIGH" ? { backgroundColor: "red" } : {};
         case "Lit":
           return value === "Yes"
-            ? { backgroundColor: "green", color:"white" }
+            ? { backgroundColor: "green", color: "white" }
             : value === "No"
             ? { backgroundColor: "violet" }
             : {};
@@ -591,7 +591,12 @@ const Dashboard = () => {
     <div className="dashboard">
       <div className="card_navbar">
         <img src={SvgImage} alt="" />
-        <DashboardSearch onSelectPatient={handleSelectPatient} fetchDataFromAPIs={fetchDataFromAPIs} selectedBatch={selectedBatch} setSelectedBatch={setSelectedBatch}/>
+        <DashboardSearch
+          onSelectPatient={handleSelectPatient}
+          fetchDataFromAPIs={fetchDataFromAPIs}
+          selectedBatch={selectedBatch}
+          setSelectedBatch={setSelectedBatch}
+        />
         <div className="right_items">
           <div className="fullscreen" onClick={toggleFullScreen}>
             <img
@@ -651,6 +656,8 @@ const Dashboard = () => {
                     handleSingleCodnition={handleSingleCodnition}
                     submittedConditions={submittedConditions} // Pass submitted conditions
                     removedCondition={removedCondition} // Pass removed condition
+                    setSubmittedConditions={setSubmittedConditions}
+                    selectedPatient={selectedPatient}
                   />
                 </div>
               )}

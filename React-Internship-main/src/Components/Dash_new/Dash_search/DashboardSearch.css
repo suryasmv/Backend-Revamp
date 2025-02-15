@@ -5,7 +5,10 @@
     gap: 8px;
 }
 
-.dashboard-search-input {
+
+.dashboard-search-input
+.batch-dropdown 
+{
     padding: 8px;
     width: 300px;
     border: 1px solid #ccc;

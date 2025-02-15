@@ -18,6 +18,7 @@ const MainContentData = ({
   submittedData,
   setSubmittedData,
   handleSeverityClick,
+  handleSeveritySubmit,
   RenderTabViewContent,
   selectedPatient,
   aiScore,
@@ -28,25 +29,28 @@ const MainContentData = ({
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [patientConditionData, setPatientConditionData] = useState({});
 
-  // useEffect(() => {
-  //   if (selectedPatient) {
-  //     fetch(`http://127.0.0.1:5000/get_patient_json_data/${selectedPatient}`)
-  //       .then((response) => response.json())
-  //       .then((data) => setPatientConditionData(data))
-  //       .catch((error) => console.error("Error fetching patient data:", error));
-  //   }
-  // }, [selectedPatient]);
+  useEffect(() => {
+    if (selectedPatient) {
+      fetch(`http://127.0.0.1:5000/get_patient_json_data/${selectedPatient}`)
+        .then((response) => response.json())
+        .then((data) => setPatientConditionData(data))
+        .catch((error) => console.error("Error fetching patient data:", error));
+
+      // Reset submitted data when patient changes
+      setSubmittedData([]);
+    }
+  }, [selectedPatient]);
 
   const toggleFullScreen = () => {
     setIsFullScreen(!isFullScreen); // Toggle fullscreen state
   };
 
   const getConcernButtonColor = () => {
-    const conditionStatus = patientConditionData[selectedCondition];
-    if (conditionStatus === "Yes") {
-      return "green";
-    } else if (conditionStatus === "No") {
-      return "blue";
+    const conditionEntry = submittedData.find(
+      (entry) => entry.condition === selectedCondition
+    );
+    if (conditionEntry && conditionEntry.Concern === "Y") {
+      return "red";
     }
     return "initial";
   };
@@ -261,6 +265,15 @@ const MainContentData = ({
           style={{ maxHeight: "400px", overflowY: "auto", fontSize: "0.9rem" }}
         >
           {RenderTabViewContent(selectedCondition)}
+        </div>
+
+        {/* Submit Button */}
+        <div className="submit-button" style={{ marginTop: "1rem" }}>
+          <Button
+            label="Submit"
+            onClick={handleSeveritySubmit}
+            style={{ fontSize: "0.8rem", padding: "0.3rem 0.5rem" }}
+          />
         </div>
       </div>
     </div>
